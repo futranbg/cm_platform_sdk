@@ -77,15 +77,15 @@
     <bool name="config_useSegmentedBatteryLed">false</bool>
 
     <!-- Default, comma-delimited, quick settings tiles. See QSConstants.java for a list of all available tiles -->
-    <string name="config_defaultQuickSettingsTiles">wifi,bt,dnd,cell,airplane,rotation,location,edit,flashlight,cast,hotspot,inversion,live_display</string>
+    <string name="config_defaultQuickSettingsTiles">wifi,bt,dnd,cell,airplane,rotation,location,edit,flashlight,live_display</string>
 
     <!-- Wifi Service -->
     <!-- Whether to make default hotspot security NONE-->
     <bool name="config_wifiHotspotSecurityNone">false</bool>
     <!-- Default wi-fi hotspot ssid -->
-    <string name="config_wifiHotSpotSsid" translatable="false"></string>
+    <string name="config_wifiHotSpotSsid" translatable="false">xOS AP</string>
     <!-- Default wi-fi hotspot pass -->
-    <string name="config_wifiHotSpotPass" translatable="false"></string>
+    <string name="config_wifiHotSpotPass" translatable="false">xosisthebestos</string>
     <!-- Default wi-fi direct name -->
     <string name="config_wifiDirectName" translatable="false"></string>
 
