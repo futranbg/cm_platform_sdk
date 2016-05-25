@@ -22,7 +22,7 @@
          1. Right
          2. Left 
 	 3. Always -->
-    <integer name="def_qs_quick_pulldown">3</integer>
+    <integer name="def_qs_quick_pulldown">1</integer>
 
     <!-- Default for CMSettings.System.SYSTEM_PROFILES_ENABLED -->
     <bool name="def_profiles_enabled">true</bool>
