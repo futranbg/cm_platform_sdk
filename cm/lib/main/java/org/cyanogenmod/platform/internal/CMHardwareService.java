@@ -54,7 +54,7 @@ import org.cyanogenmod.hardware.UniqueDeviceId;
 import org.cyanogenmod.hardware.VibratorHW;
 
 /** @hide */
-public class CMHardwareService extends CMSystemService implements ThermalUpdateCallback {
+public class CMHardwareService extends SystemService implements ThermalUpdateCallback {
 
     private static final boolean DEBUG = true;
     private static final String TAG = CMHardwareService.class.getSimpleName();
@@ -344,12 +344,13 @@ public class CMHardwareService extends CMSystemService implements ThermalUpdateC
         super(context);
         mContext = context;
         mCmHwImpl = getImpl(context);
-        publishBinderService(CMContextConstants.CM_HARDWARE_SERVICE, mService);
-    }
-
-    @Override
-    public String getFeatureDeclaration() {
-        return CMContextConstants.Features.HARDWARE_ABSTRACTION;
+        if (context.getPackageManager().hasSystemFeature(
+                CMContextConstants.Features.HARDWARE_ABSTRACTION)) {
+            publishBinderService(CMContextConstants.CM_HARDWARE_SERVICE, mService);
+        } else {
+            Log.wtf(TAG, "CM hardware service started by system server but feature xml not" +
+                    " declared. Not publishing binder service!");
+        }
     }
 
     @Override

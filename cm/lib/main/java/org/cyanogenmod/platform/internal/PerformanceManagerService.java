@@ -41,7 +41,7 @@ import cyanogenmod.power.PerformanceManagerInternal;
 import cyanogenmod.providers.CMSettings;
 
 /** @hide */
-public class PerformanceManagerService extends CMSystemService {
+public class PerformanceManagerService extends SystemService {
 
     private static final String TAG = "PerformanceManager";
 
@@ -105,13 +105,14 @@ public class PerformanceManagerService extends CMSystemService {
     }
 
     @Override
-    public String getFeatureDeclaration() {
-        return CMContextConstants.Features.PERFORMANCE;
-    }
-
-    @Override
     public void onStart() {
-        publishBinderService(CMContextConstants.CM_PERFORMANCE_SERVICE, mBinder);
+        if (mContext.getPackageManager().hasSystemFeature(
+                CMContextConstants.Features.PERFORMANCE)) {
+            publishBinderService(CMContextConstants.CM_PERFORMANCE_SERVICE, mBinder);
+        } else {
+            Log.wtf(TAG, "CM performance service started by system server but feature xml not" +
+                    " declared. Not publishing binder service!");
+        }
         publishLocalService(PerformanceManagerInternal.class, new LocalService());
     }
 

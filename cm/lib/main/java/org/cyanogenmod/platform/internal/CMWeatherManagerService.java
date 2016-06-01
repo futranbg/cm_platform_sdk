@@ -54,7 +54,7 @@ import cyanogenmod.weatherservice.ServiceRequestResult;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CMWeatherManagerService extends CMSystemService {
+public class CMWeatherManagerService extends SystemService{
 
     private static final String TAG = CMWeatherManagerService.class.getSimpleName();
 
@@ -219,11 +219,6 @@ public class CMWeatherManagerService extends CMSystemService {
     public CMWeatherManagerService(Context context) {
         super(context);
         mContext = context;
-    }
-
-    @Override
-    public String getFeatureDeclaration() {
-        return CMContextConstants.Features.WEATHER_SERVICES;
     }
 
     @Override

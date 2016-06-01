@@ -54,7 +54,6 @@ import com.android.server.twilight.TwilightState;
 
 import org.cyanogenmod.internal.util.QSConstants;
 import org.cyanogenmod.internal.util.QSUtils;
-import org.cyanogenmod.platform.internal.CMSystemService;
 import org.cyanogenmod.platform.internal.R;
 
 import java.io.FileDescriptor;
@@ -80,7 +79,7 @@ import cyanogenmod.providers.CMSettings;
  * and calibration. It interacts with CMHardwareService to relay
  * changes down to the lower layers.
  */
-public class LiveDisplayService extends CMSystemService {
+public class LiveDisplayService extends SystemService {
 
     private static final String TAG = "LiveDisplay";
 
@@ -148,13 +147,14 @@ public class LiveDisplayService extends CMSystemService {
     }
 
     @Override
-    public String getFeatureDeclaration() {
-        return CMContextConstants.Features.LIVEDISPLAY;
-    }
-
-    @Override
     public void onStart() {
-        publishBinderService(CMContextConstants.CM_LIVEDISPLAY_SERVICE, mBinder);
+        if (mContext.getPackageManager().hasSystemFeature(
+                CMContextConstants.Features.LIVEDISPLAY)) {
+            publishBinderService(CMContextConstants.CM_LIVEDISPLAY_SERVICE, mBinder);
+        } else {
+            Log.wtf(TAG, "CM LiveDisplay service started by system server but feature xml not" +
+                    " declared. Not publishing binder service!");
+        }
     }
 
     @Override

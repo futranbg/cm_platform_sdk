@@ -58,7 +58,7 @@ import org.cyanogenmod.platform.internal.R;
  * Internal service which manages interactions with system ui elements
  * @hide
  */
-public class CMStatusBarManagerService extends CMSystemService {
+public class CMStatusBarManagerService extends SystemService {
     private static final String TAG = "CMStatusBarManagerService";
 
     private Context mContext;
@@ -82,12 +82,13 @@ public class CMStatusBarManagerService extends CMSystemService {
     }
 
     @Override
-    public String getFeatureDeclaration() {
-        return CMContextConstants.Features.STATUSBAR;
-    }
-
-    @Override
     public void onStart() {
+        if (!mContext.getPackageManager().hasSystemFeature(
+                CMContextConstants.Features.STATUSBAR)) {
+            Log.wtf(TAG, "CM statusbar service started by system server but feature xml not" +
+                    " declared. Not publishing binder service!");
+            return;
+        }
         Log.d(TAG, "registerCMStatusBar cmstatusbar: " + this);
         mCustomTileListeners = new CustomTileListeners();
         publishBinderService(CMContextConstants.CM_STATUS_BAR_SERVICE, mService);
