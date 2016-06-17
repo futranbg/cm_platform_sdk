@@ -245,6 +245,8 @@ public class CMWeatherManager {
      */
     public void registerWeatherServiceProviderChangeListener(
             @NonNull WeatherServiceProviderChangeListener listener) {
+        if (sWeatherManagerService == null) return;
+
         synchronized (mProviderChangedListeners) {
             if (mProviderChangedListeners.contains(listener)) {
                 throw new IllegalArgumentException("Listener already registered");
@@ -266,6 +268,8 @@ public class CMWeatherManager {
      */
     public void unregisterWeatherServiceProviderChangeListener(
             @NonNull WeatherServiceProviderChangeListener listener) {
+        if (sWeatherManagerService == null) return;
+
         synchronized (mProviderChangedListeners) {
             if (!mProviderChangedListeners.contains(listener)) {
                 throw new IllegalArgumentException("Listener was never registered");
@@ -286,6 +290,8 @@ public class CMWeatherManager {
      * @return the service's label
      */
     public String getActiveWeatherServiceProviderLabel() {
+        if (sWeatherManagerService == null) return null;
+
         try {
             return sWeatherManagerService.getActiveWeatherServiceProviderLabel();
         } catch(RemoteException e){
