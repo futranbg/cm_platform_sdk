@@ -55,12 +55,32 @@
     <integer name="config_dayColorTemperature">6500</integer>
     <integer name="config_nightColorTemperature">4800</integer>
     <integer name="config_outdoorAmbientLux">12000</integer>
-    <integer name="config_defaultLiveDisplayMode">0</integer>
+    <integer name="config_outdoorAmbientLuxHysteresis">1500</integer>
+    <integer name="config_defaultLiveDisplayMode">2</integer>
+
+    <!-- These values should map to the true min and max
+         that the backend is capable of adjusting to. This
+         is more important when using the ColorBalance mode,
+         as the discrete adjustment is interpolated between
+         this range (with config_dayColorTemperature at zero) -->
+    <integer name="config_minColorTemperature">1000</integer>
+    <integer name="config_maxColorTemperature">10000</integer>
 
     <bool name="config_defaultAutoContrast">false</bool>
     <bool name="config_defaultAutoOutdoorMode">true</bool>
     <bool name="config_defaultColorEnhancement">true</bool>
     <bool name="config_defaultCABC">true</bool>
+
+    <!-- Display mode remapping table.
+         If the mode names returned by the backend do not match
+         the predefined and translated strings in the Settings
+         app, they can be remapped here. The format is
+         "oldname:newname", one per entry. -->
+    <string-array name="config_displayModeMappings" translatable="false">
+    </string-array>
+
+    <!-- Should we filter any display modes which are unampped? -->
+    <bool name="config_filterDisplayModes">false</bool>
 
     <!-- Is the notification LED brightness adjustable ?
          Used to decide if the user can set LED brightness -->
@@ -77,19 +97,19 @@
     <bool name="config_useSegmentedBatteryLed">false</bool>
 
     <!-- Default, comma-delimited, quick settings tiles. See QSConstants.java for a list of all available tiles -->
-    <string name="config_defaultQuickSettingsTiles">wifi,bt,dnd,cell,airplane,rotation,location,edit,flashlight,live_display</string>
+    <string name="config_defaultQuickSettingsTiles">wifi,bt,dnd,cell,airplane,rotation,location,edit,flashlight,cast,hotspot,inversion,live_display</string>
 
     <!-- Wifi Service -->
     <!-- Whether to make default hotspot security NONE-->
     <bool name="config_wifiHotspotSecurityNone">false</bool>
     <!-- Default wi-fi hotspot ssid -->
-    <string name="config_wifiHotSpotSsid" translatable="false">xOS AP</string>
+    <string name="config_wifiHotSpotSsid" translatable="false"></string>
     <!-- Default wi-fi hotspot pass -->
-    <string name="config_wifiHotSpotPass" translatable="false">xosisthebestos</string>
+    <string name="config_wifiHotSpotPass" translatable="false"></string>
     <!-- Default wi-fi direct name -->
     <string name="config_wifiDirectName" translatable="false"></string>
 
-    <!-- Defines external services to be started by the SystemServer at boot. The service itself
+    <!-- Defines external services to be started by the CMSystemServer at boot. The service itself
          should publish as a binder services in its onStart -->
     <string-array name="config_externalCMServices">
         <item>org.cyanogenmod.platform.internal.CMStatusBarManagerService</item>
@@ -99,11 +119,17 @@
         <item>org.cyanogenmod.platform.internal.CMHardwareService</item>
         <item>org.cyanogenmod.platform.internal.AppSuggestManagerService</item>
         <item>org.cyanogenmod.platform.internal.PerformanceManagerService</item>
-        <item>org.cyanogenmod.platform.internal.ThemeManagerService</item>
-        <item>org.cyanogenmod.platform.internal.IconCacheManagerService</item>
+        <item>org.cyanogenmod.platform.internal.ThemeManagerServiceBroker</item>
+        <item>org.cyanogenmod.platform.internal.IconCacheManagerServiceBroker</item>
         <item>org.cyanogenmod.platform.internal.LiveLockScreenServiceBroker</item>
-        <item>org.cyanogenmod.platform.internal.CMWeatherManagerService</item>
+        <item>org.cyanogenmod.platform.internal.WeatherManagerServiceBroker</item>
         <item>org.cyanogenmod.platform.internal.display.LiveDisplayService</item>
         <item>org.cyanogenmod.platform.internal.CMAudioServiceBroker</item>
     </string-array>
+
+    <!-- The CMSystemServer class that is invoked from Android's SystemServer -->
+    <string name="config_externalSystemServer" translatable="false">org.cyanogenmod.platform.internal.CMSystemServer</string>
+
+    <!-- Whether to show icon and name of optimized apps on the boot dexopt screen. -->
+    <bool name="config_bootDexoptHideAppDetails">false</bool>
 </resources>
