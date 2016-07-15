@@ -21,7 +21,7 @@
          0. Off
          1. Right
          2. Left -->
-    <integer name="def_qs_quick_pulldown">0</integer>
+    <integer name="def_qs_quick_pulldown">1</integer>
 
     <!-- Default for CMSettings.System.SYSTEM_PROFILES_ENABLED -->
     <bool name="def_profiles_enabled">true</bool>
@@ -59,7 +59,16 @@
          * 6: Display the battery as plain text
          * default: 2
          -->
-    <integer name="def_battery_style">2</integer>
+    <integer name="def_battery_style">0</integer>
+
+    <!-- Default for CMSettings.System.STATUS_BAR_BATTERY_STYLE
+         * 0: Turn off clock
+	 * 1: Display the clock in the right position
+	 * 2: Display the clock in the center position
+	 * 3: Display the clock in the left position
+         * default: 2
+         -->
+    <integer name="def_clock_style">2</integer>
 
     <!-- Default for CMSettings.Secure.QS_USE_MAIN_TILES -->
     <bool name="def_sysui_qs_main_tiles">true</bool>
