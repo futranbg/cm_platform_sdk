@@ -1,4 +1,4 @@
-/*
+/**
  * Copyright (C) 2016 The CyanogenMod Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -14,32 +14,24 @@
  * limitations under the License.
  */
 
-#include "JNIHelp.h"
-#include "jni.h"
-#include "utils/Log.h"
-#include "utils/misc.h"
+package org.cyanogenmod.platform.internal;
 
-namespace android {
+import android.content.Context;
+import com.android.server.SystemService;
 
-int register_org_cyanogenmod_platform_internal_PerformanceManagerService(JNIEnv* env);
-
-};
-
-using namespace android;
-
-extern "C" jint JNI_OnLoad(JavaVM* vm, void* /* reserved */)
-{
-    JNIEnv* env = NULL;
-    jint result = -1;
-
-    if (vm->GetEnv((void**) &env, JNI_VERSION_1_4) != JNI_OK) {
-        ALOGE("GetEnv failed!");
-        return result;
+public abstract class CMSystemService extends SystemService {
+    public CMSystemService(Context context) {
+        super(context);
     }
-    ALOG_ASSERT(env, "Could not retrieve the env!");
 
-    register_org_cyanogenmod_platform_internal_PerformanceManagerService(env);
+    public abstract String getFeatureDeclaration();
 
-    return JNI_VERSION_1_4;
+
+    /**
+     * Override and return true if the service should be started
+     * before the device is decrypted.
+     */
+    public boolean isCoreService() {
+        return true;
+    }
 }
-
